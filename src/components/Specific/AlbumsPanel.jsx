@@ -10,7 +10,7 @@ export default function AlbumsPanel({ value, index }) {
     >
       {value == index && (
         <LeaderBoardPanel
-          url="https://jsonplaceholder.typicode.com/todos"
+          url="https://jsonplaceholder.typicode.com/albums"
           colNames={["title"]}
           keyName="id"
           boardName="album"
