@@ -11,11 +11,12 @@ export default function useFetchData(url, boardName) {
     );
     return rst;
   };
-  const { data, isError, isPreviousData } = useQuery({
+  //cache data
+  const { data, isPreviousData } = useQuery({
     queryKey: [boardName, limit, page],
     queryFn: () => fetchData(limit, page),
     keepPreviousData: true,
-    staleTime: 1000000,
+    staleTime: 100000,
   });
   // Prefetch the next page!
   useEffect(() => {
@@ -42,7 +43,6 @@ export default function useFetchData(url, boardName) {
     page,
     setPage,
     totalItem,
-    isError,
     rows: data,
   };
 }

@@ -3,9 +3,9 @@ import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import PostsPanel from "./components/Specific/PostsPanel";
-import AlbumsPanel from "./components/Specific/AlbumsPanel";
-import TodosPanel from "./components/Specific/TodosPanel";
+import PostsPanel from "./components/Specific/Panel/PostsPanel";
+import AlbumsPanel from "./components/Specific/Panel/AlbumsPanel";
+import TodosPanel from "./components/Specific/Panel/TodosPanel";
 import "./App.css";
 //external
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -34,7 +34,7 @@ function App() {
           >
             <Tab label="POSTS" {...tabProps(0)} />
             <Tab label="TODOS" {...tabProps(1)} />
-            <Tab label="ALBUMNS" {...tabProps(2)} />
+            <Tab label="ALBUMS" {...tabProps(2)} />
           </Tabs>
         </Box>
         <PostsPanel value={selectedTab} index={0} />

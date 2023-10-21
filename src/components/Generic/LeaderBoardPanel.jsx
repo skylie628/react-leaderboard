@@ -1,4 +1,4 @@
-import Box from "@mui/material/Box";
+//component
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,54 +8,31 @@ import TableRow from "@mui/material/TableRow";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
 import Paper from "@mui/material/Paper";
-import CircularProgress from "@mui/material/CircularProgress";
 import TablePaginationActions from "./TablePaginationActions";
 //hook
-import useFetchData from "../../hooks/useFetchData";
-export default function LeaderBoardPanel({
-  colNames,
-  keyName,
-  boardName,
-  url,
-}) {
-  const { limit, setLimit, page, setPage, rows, totalItem } = useFetchData(
-    url,
-    boardName
-  );
-  const handlePageChange = (_, newPage) => {
-    setPage(newPage);
-  };
-  const handleChangeRowsPerPage = (event) => {
-    setLimit(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+import useLeaderBoardProps from "../../hooks/useLeaderBoardProps";
+//internal
+import { urls } from "../../contants/urls";
+export default function LeaderBoardPanel({ headerNames, renderRow, resource }) {
+  const {
+    limit,
+    page,
+    rows,
+    totalItem,
+    handlePageChange,
+    handleChangeRowsPerPage,
+  } = useLeaderBoardProps({ url: urls[resource], resource });
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="leaderboard panel">
         <TableHead>
           <TableRow>
-            <TableCell>{keyName}</TableCell>
-            {colNames.map((name) => (
+            {headerNames.map((name) => (
               <TableCell key={name}>{name}</TableCell>
             ))}
           </TableRow>
         </TableHead>
-        <TableBody>
-          {rows &&
-            rows.map((row) => (
-              <TableRow
-                key={row[keyName]}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row[keyName]}
-                </TableCell>
-                {colNames.map((name) => (
-                  <TableCell key={row[name]}>{row[name].toString()}</TableCell>
-                ))}
-              </TableRow>
-            ))}
-        </TableBody>
+        <TableBody>{rows && rows.map((row) => renderRow(row))}</TableBody>
         <TableFooter>
           <TableRow>
             <TablePagination
