@@ -13,6 +13,7 @@ export default function TodosPanel({ value, index }) {
           url="https://jsonplaceholder.typicode.com/todos"
           colNames={["title", "completed"]}
           keyName="id"
+          boardName="todo"
         />
       )}
     </div>

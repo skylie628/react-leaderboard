@@ -14,6 +14,7 @@ export default function PostsPanel({ value, index }) {
           url="https://jsonplaceholder.typicode.com/posts"
           colNames={["title", "body"]}
           keyName="id"
+          boardName="post"
         />
       )}
     </div>

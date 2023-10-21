@@ -7,7 +7,9 @@ import PostsPanel from "./components/Specific/PostsPanel";
 import AlbumsPanel from "./components/Specific/AlbumsPanel";
 import TodosPanel from "./components/Specific/TodosPanel";
 import "./App.css";
-
+//external
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+export const queryClient = new QueryClient();
 function App() {
   const [selectedTab, setSeletectedTab] = React.useState(0);
 
@@ -19,7 +21,7 @@ function App() {
   }
   const handleChangeTab = (event, newValue) => setSeletectedTab(newValue);
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Box className="w-screen p-4 flex flex-col items-center">
         <Box
           className="w-10/12"
@@ -39,7 +41,7 @@ function App() {
         <TodosPanel value={selectedTab} index={1} />
         <AlbumsPanel value={selectedTab} index={2} />
       </Box>
-    </>
+    </QueryClientProvider>
   );
 }
 

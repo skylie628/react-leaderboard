@@ -12,30 +12,24 @@ import CircularProgress from "@mui/material/CircularProgress";
 import TablePaginationActions from "./TablePaginationActions";
 //hook
 import useFetchData from "../../hooks/useFetchData";
-export default function LeaderBoardPanel({ colNames, keyName, url }) {
-  const { limit, setLimit, page, setPage, rows, totalItem, isLoading } =
-    useFetchData(url);
-  const handlePageChange = (event, newPage) => {
+export default function LeaderBoardPanel({
+  colNames,
+  keyName,
+  boardName,
+  url,
+}) {
+  const { limit, setLimit, page, setPage, rows, totalItem } = useFetchData(
+    url,
+    boardName
+  );
+  const handlePageChange = (_, newPage) => {
     setPage(newPage);
   };
   const handleChangeRowsPerPage = (event) => {
-    console.log(parseInt(event.target.value, 10));
     setLimit(parseInt(event.target.value, 10));
     setPage(0);
   };
-  return isLoading ? (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: 240,
-      }}
-    >
-      <CircularProgress />
-    </Box>
-  ) : (
+  return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="leaderboard panel">
         <TableHead>
@@ -47,19 +41,20 @@ export default function LeaderBoardPanel({ colNames, keyName, url }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row[keyName]}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row[keyName]}
-              </TableCell>
-              {colNames.map((name) => (
-                <TableCell key={row[name]}>{row[name].toString()}</TableCell>
-              ))}
-            </TableRow>
-          ))}
+          {rows &&
+            rows.map((row) => (
+              <TableRow
+                key={row[keyName]}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {row[keyName]}
+                </TableCell>
+                {colNames.map((name) => (
+                  <TableCell key={row[name]}>{row[name].toString()}</TableCell>
+                ))}
+              </TableRow>
+            ))}
         </TableBody>
         <TableFooter>
           <TableRow>

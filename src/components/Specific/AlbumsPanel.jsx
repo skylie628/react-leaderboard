@@ -13,6 +13,7 @@ export default function AlbumsPanel({ value, index }) {
           url="https://jsonplaceholder.typicode.com/todos"
           colNames={["title"]}
           keyName="id"
+          boardName="album"
         />
       )}
     </div>
