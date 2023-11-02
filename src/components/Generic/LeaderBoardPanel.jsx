@@ -12,8 +12,7 @@ import TablePaginationActions from "./TablePaginationActions";
 //hook
 import useLeaderBoardProps from "../../hooks/useLeaderBoardProps";
 //internal
-import { urls } from "../../contants/urls";
-export default function LeaderBoardPanel({ headerNames, renderRow, resource }) {
+export default function LeaderBoardPanel({ headerNames, renderRow }) {
   const {
     limit,
     page,
@@ -21,7 +20,10 @@ export default function LeaderBoardPanel({ headerNames, renderRow, resource }) {
     totalItem,
     handlePageChange,
     handleChangeRowsPerPage,
-  } = useLeaderBoardProps({ url: urls[resource], resource });
+  } = useLeaderBoardProps();
+  if (page < 1 || page > totalItem / limit) {
+    return <div>Out of range</div>;
+  }
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="leaderboard panel">
@@ -39,7 +41,7 @@ export default function LeaderBoardPanel({ headerNames, renderRow, resource }) {
               rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
               count={totalItem}
               rowsPerPage={limit}
-              page={page}
+              page={page - 1}
               SelectProps={{
                 inputProps: {
                   "aria-label": "rows per page",
